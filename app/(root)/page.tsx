@@ -7,37 +7,66 @@ import { getLoggedInUser } from '@/lib/actions/user.actions';
 
 const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
   const currentPage = Number(page as string) || 1;
-  const loggedIn = await getLoggedInUser();
-  const accounts = await getAccounts({ 
-    userId: loggedIn.$id 
-  })
 
-  if(!accounts) return;
-  
-  const accountsData = accounts?.data;
+  let loggedIn;
+  try {
+    loggedIn = await getLoggedInUser();
+    if (!loggedIn || !loggedIn.$id) {
+      console.error('User is not logged in or $id is missing');
+      return;
+    }
+  } catch (error) {
+    console.error('Error fetching logged-in user:', error);
+    return;
+  }
+
+  let accounts;
+  try {
+    accounts = await getAccounts({ userId: loggedIn.$id });
+    if (!accounts || !accounts.data) {
+      console.error('Accounts data is missing');
+      return;
+    }
+  } catch (error) {
+    console.error('Error fetching accounts:', error);
+    return;
+  }
+
+  const accountsData = accounts.data;
   const appwriteItemId = (id as string) || accountsData[0]?.appwriteItemId;
 
-  const account = await getAccount({ appwriteItemId })
+  if (!appwriteItemId) {
+    console.error('AppwriteItemId is missing');
+    return;
+  }
+
+  let account;
+  try {
+    account = await getAccount({ appwriteItemId });
+  } catch (error) {
+    console.error('Error fetching account:', error);
+    return;
+  }
 
   return (
     <section className="home">
       <div className="home-content">
         <header className="home-header">
-          <HeaderBox 
+          <HeaderBox
             type="greeting"
             title="Welcome"
             user={loggedIn?.firstName || 'Guest'}
             subtext="Access and manage your account and transactions efficiently."
           />
 
-          <TotalBalanceBox 
+          <TotalBalanceBox
             accounts={accountsData}
             totalBanks={accounts?.totalBanks}
             totalCurrentBalance={accounts?.totalCurrentBalance}
           />
         </header>
 
-        <RecentTransactions 
+        <RecentTransactions
           accounts={accountsData}
           transactions={account?.transactions}
           appwriteItemId={appwriteItemId}
@@ -45,7 +74,7 @@ const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
         />
       </div>
 
-      <RightSidebar 
+      <RightSidebar
         user={loggedIn}
         transactions={account?.transactions}
         banks={accountsData?.slice(0, 2)}
@@ -54,4 +83,4 @@ const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
   )
 }
 
-export default Home
+export default Home;
