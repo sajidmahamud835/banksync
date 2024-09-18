@@ -66,8 +66,6 @@ const AuthForm = ({ type }: { type: string }) => {
         const newUser = await signUp(userData);
 
         setUser(newUser);
-
-        router.push('/dashboard')
       }
 
       if (type === 'sign-in') {
@@ -80,7 +78,7 @@ const AuthForm = ({ type }: { type: string }) => {
       }
     } catch (error) {
       console.log(error);
-      setErrorMsg('Error: ' + error);
+      setErrorMsg('Something went wrong, please try again');
     } finally {
       setIsLoading(false);
     }
