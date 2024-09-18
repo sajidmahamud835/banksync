@@ -209,3 +209,71 @@ export const authFormSchema = (type: string) => z.object({
   email: z.string().email(),
   password: z.string().min(8),
 })
+
+//To Do: Implement validation to AuthForm
+export const authFormValidationRules = {
+  firstName: {
+    required: true,
+    minLength: 2,
+    maxLength: 50,
+    pattern: /^[a-zA-Z\s]+$/,
+    message: 'First name must be at least 2 characters long and only contain letters and spaces',
+  },
+  lastName: {
+    required: true,
+    minLength: 2,
+    maxLength: 50,
+    pattern: /^[a-zA-Z\s]+$/,
+    message: 'Last name must be at least 2 characters long and only contain letters and spaces',
+  },
+  address1: {
+    required: true,
+    minLength: 5,
+    maxLength: 100,
+    pattern: /^[a-zA-Z0-9\s,.-]+$/,
+    message: 'Address must be at least 5 characters long and only contain letters, numbers, and special characters',
+  },
+  city: {
+    required: true,
+    minLength: 2,
+    maxLength: 50,
+    pattern: /^[a-zA-Z\s]+$/,
+    message: 'City must be at least 2 characters long and only contain letters and spaces',
+  },
+  state: {
+    required: true,
+    minLength: 2,
+    maxLength: 2,
+    pattern: /^[a-zA-Z]+$/,
+    message: 'State must be exactly 2 characters long and only contain letters',
+  },
+  postalCode: {
+    required: true,
+    minLength: 5,
+    maxLength: 10,
+    pattern: /^[0-9]+$/,
+    message: 'Postal code must be at least 5 characters long and only contain numbers',
+  },
+  dateOfBirth: {
+    required: true,
+    pattern: /^\d{1,2}\/\d{1,2}\/\d{4}$/,
+    message: 'Date of birth must be in the format MM/DD/YYYY',
+  },
+  ssn: {
+    required: true,
+    pattern: /^\d{3}-\d{2}-\d{4}$/,
+    message: 'SSN must be in the format XXX-XX-XXXX',
+  },
+  email: {
+    required: false,
+    pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+    message: 'Email must be in a valid format',
+  },
+  password: {
+    required: true,
+    minLength: 8,
+    maxLength: 128,
+    pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    message: 'Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character',
+  },
+};
