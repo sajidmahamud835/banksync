@@ -1,4 +1,3 @@
-
 const sdk = require('node-appwrite');
 const dotenv = require('dotenv');
 
@@ -24,35 +23,46 @@ type Attribute = {
 // Define the collections and their attributes with required fields
 const collections: Record<string, Attribute[]> = {
     APPWRITE_USER_COLLECTION_ID: [
-        { key: 'firstName', type: 'string', size: 255, required: true },
-        { key: 'lastName', type: 'string', size: 255, required: true },
+        { key: 'userId', type: 'string', size: 2000, required: true },
+        { key: 'firstName', type: 'string', size: 100, required: true },
+        { key: 'lastName', type: 'string', size: 100, required: true },
+        { key: 'dateOfBirth', type: 'string', size: 100, required: true },
         { key: 'email', type: 'email', size: 255, required: true },
-        { key: 'password', type: 'string', size: 255, required: true },
-        { key: 'address1', type: 'string', size: 255, required: true },
-        { key: 'city', type: 'string', size: 255, required: true },
-        { key: 'state', type: 'string', size: 255, required: true },
-        { key: 'postalCode', type: 'string', size: 255, required: true },
-        { key: 'dateOfBirth', type: 'string', size: 255, required: true },
-        { key: 'ssn', type: 'string', size: 255, required: true },
+        { key: 'address1', type: 'string', size: 100, required: true },
+        { key: 'city', type: 'string', size: 100, required: true },
+        { key: 'state', type: 'string', size: 100, required: true },
+        { key: 'postalCode', type: 'string', size: 10, required: true },
+        { key: 'ssn', type: 'string', size: 100, required: true },
+        { key: 'dwollaCustomerUrl', type: 'string', size: 2000, required: true },
+        { key: 'dwollaCustomerId', type: 'string', size: 2000, required: true },
     ],
-    APPWRITE_ITEM_COLLECTION_ID: [
-        { key: 'name', type: 'string', size: 255, required: true },
-        { key: 'availableBalance', type: 'float', required: true },
-        { key: 'currentBalance', type: 'float', required: true },
-        { key: 'institutionId', type: 'string', size: 255, required: true },
-    ],
+
     APPWRITE_BANK_COLLECTION_ID: [
-        { key: 'bankId', type: 'string', size: 255, required: true },
-        { key: 'accessToken', type: 'string', size: 255, required: true },
-        { key: 'fundingSourceUrl', type: 'string', size: 255, required: true },
-        { key: 'userId', type: 'string', size: 255, required: true },
-        { key: 'shareableId', type: 'string', size: 255, required: true },
+        { key: 'bankId', type: 'string', size: 2000, required: true },
+        { key: 'accountId', type: 'string', size: 2000, required: true },
+        { key: 'accessToken', type: 'string', size: 2000, required: true },
+        { key: 'fundingSourceUrl', type: 'string', size: 2000, required: true },
+        { key: 'userId', type: 'string', size: 2000, required: true },
+        { key: 'shareableId', type: 'string', size: 2000, required: true },
     ],
+
     APPWRITE_TRANSACTION_COLLECTION_ID: [
-        { key: 'name', type: 'string', size: 255, required: true },
-        { key: 'amount', type: 'float', required: true },
-        { key: 'category', type: 'string', size: 255, required: true },
+        { key: 'id', type: 'string', size: 2000, required: true },
+        { key: 'type', type: 'string', size: 255, required: true },
         { key: 'date', type: 'string', size: 255, required: true },
+        { key: 'image', type: 'string', size: 255, required: true },
+        { key: 'pending', type: 'string', size: 255, required: true },
+        { key: 'paymentChannel', type: 'string', size: 255, required: true },
+        { key: 'accountId', type: 'string', size: 255, required: true },
+        { key: 'name', type: 'string', size: 255, required: true },
+        { key: 'amount', type: 'string', size: 255, required: true },
+        { key: 'category', type: 'string', size: 255, required: true },
+        { key: 'channel', type: 'string', size: 255, required: true },
+        { key: 'senderId', type: 'string', size: 2000, required: true },
+        { key: 'senderBankId', type: 'string', size: 2000, required: true },
+        { key: 'receiverId', type: 'string', size: 2000, required: true },
+        { key: 'receiverBankId', type: 'string', size: 2000, required: true },
+        { key: 'email', type: 'string', size: 255, required: true }
     ],
 };
 
