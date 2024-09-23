@@ -9,7 +9,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 
 import { cn } from '@/lib/utils';
@@ -57,8 +56,7 @@ const CustomInput = ({ control, name, label, placeholder, type = 'text' }: Custo
                   value={getValues(name) ? format(new Date(getValues(name)), "yyyy-MM-dd") : ""}
                   onChange={(e) => setValue(name, e.target.value)}
                   placeholder={placeholder}
-                  className={cn(
-                    "w-[240px] pl-3 pr-10 text-left font-normal",
+                  className={cn("input-class",
                     !getValues(name) && "text-muted-foreground"
                   )}
                 />
