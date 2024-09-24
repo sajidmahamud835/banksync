@@ -50,6 +50,7 @@ const CustomInput = ({ control, name, label, placeholder, options }: CustomInput
                 <Input
                   placeholder={placeholder}
                   className="input-class"
+                  id={field.name}
                   type={name === 'password' ? 'password' : name === 'dateOfBirth' ? 'date' : 'text'}
                   {...field}
                 />
