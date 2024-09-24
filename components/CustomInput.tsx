@@ -51,7 +51,7 @@ const CustomInput = ({ control, name, label, placeholder, options }: CustomInput
                   placeholder={placeholder}
                   className="input-class"
                   id={field.name}
-                  type={name === 'password' ? 'password' : name === 'dateOfBirth' ? 'date' : 'text'}
+                  type={name === 'password' ? 'password' : name === 'confirmpassword' ? 'password' : name === 'dateOfBirth' ? 'date' : 'text'}
                   {...field}
                 />
               )}

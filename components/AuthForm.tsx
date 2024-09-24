@@ -118,8 +118,7 @@ const AuthForm = ({ type }: { type: string }) => {
 
     try {
       // Sign up with Appwrite & create plaid token
-
-      if (type === 'sign-up') {
+      if (type === 'sign-up' && data.password === data.confirmpassword) {
         const userData = {
           firstName: data.firstName!,
           lastName: data.lastName!,
@@ -136,6 +135,8 @@ const AuthForm = ({ type }: { type: string }) => {
         const newUser = await signUp(userData);
 
         setUser(newUser);
+      } else {
+        setErrorMsg("Passwords do not match. Please confirm your password.")
       }
 
       if (type === 'sign-in') {
