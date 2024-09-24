@@ -17,7 +17,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import CustomInput from './CustomInput';
 import { authFormSchema } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';
@@ -139,7 +138,7 @@ const AuthForm = ({ type }: { type: string }) => {
                     <CustomInput control={form.control} name='postalCode' label="Postal Code" placeholder='Example: 11101' />
                   </div>
                   <div className="flex gap-4">
-                    <CustomInput control={form.control} name='dateOfBirth' label="Date of Birth" type='date' placeholder='YYYY-MM-DD' />
+                    <CustomInput control={form.control} name='dateOfBirth' label="Date of Birth" placeholder='' />
                     <CustomInput control={form.control} name='ssn' label="SSN" placeholder='Example: 1234' />
                   </div>
                 </>
