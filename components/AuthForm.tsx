@@ -128,6 +128,8 @@ const AuthForm = ({ type }: { type: string }) => {
 
         setUser(newUser);
       } else {
+
+        //To-Do: Update password error properly.
         setErrorMsg("Passwords do not match. Please confirm your password.")
       }
 
