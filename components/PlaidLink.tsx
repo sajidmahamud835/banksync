@@ -4,9 +4,8 @@ import { PlaidLinkOnSuccess, PlaidLinkOptions, usePlaidLink } from 'react-plaid-
 import { useRouter } from 'next/navigation';
 import { createLinkToken, exchangePublicToken } from '@/lib/actions/user.actions';
 import Image from 'next/image';
-import { cn } from '@/lib/utils';
 
-const PlaidLink = ({ user, className }: { user: User, className?: string }) => {
+const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
   const router = useRouter();
 
   const [token, setToken] = useState('');
@@ -38,26 +37,37 @@ const PlaidLink = ({ user, className }: { user: User, className?: string }) => {
   const { open, ready } = usePlaidLink(config);
 
   return (
-    <button
-      onClick={() => open()}
-      className={cn(
-        "sidebar-link group transition-all duration-300 ease-in-out",
-        "hover:bg-bank-gradient",
-        className
+    <>
+      {variant === 'primary' ? (
+        <Button
+          onClick={() => open()}
+          disabled={!ready}
+          className="plaidlink-primary"
+        >
+          Connect bank
+        </Button>
+      ) : variant === 'ghost' ? (
+        <Button onClick={() => open()} variant="ghost" className="plaidlink-ghost">
+          <Image
+            src="/icons/connect-bank.svg"
+            alt="connect bank"
+            width={24}
+            height={24}
+          />
+          <p className='hiddenl text-[16px] font-semibold text-black-2 xl:block'>Connect bank</p>
+        </Button>
+      ) : (
+        <Button onClick={() => open()} className="plaidlink-default">
+          <Image
+            src="/icons/connect-bank.svg"
+            alt="connect bank"
+            width={24}
+            height={24}
+          />
+          <p className='text-[16px] font-semibold text-black-2'>Connect bank</p>
+        </Button>
       )}
-    >
-      <div className="relative size-6 transition-transform group-hover:scale-110">
-        <Image
-          src="/icons/plus.svg"
-          alt="Connect Bank"
-          fill
-          className="group-hover:brightness-[3] group-hover:invert-0"
-        />
-      </div>
-      <p className="sidebar-label group-hover:text-white">
-        Connect Bank
-      </p>
-    </button>
+    </>
   )
 }
 

@@ -66,7 +66,7 @@ const Sidebar = ({ user }: SiderbarProps) => {
         })}
 
         <div className="transition-all duration-300 ease-in-out hover:scale-105">
-          <PlaidLink user={user} className="w-full group" />
+          <PlaidLink user={user} variant="ghost" />
         </div>
       </nav>
 
