@@ -36,7 +36,7 @@ const CustomInput = ({ control, name, label, placeholder, options }: CustomInput
               {options ? (
                 <Select>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select State" />
+                    <SelectValue placeholder={placeholder} />
                   </SelectTrigger>
                   <SelectContent>
                     {options.map((option) => (
