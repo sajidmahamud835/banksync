@@ -197,19 +197,29 @@ export const getTransactionStatus = (date: Date) => {
 
 export const authFormSchema = (type: string) => z.object({
   // Fields for both sign-in and sign-up
-  email: z.string().email(),
-  password: z.string().min(8),
+  email: z.string().email("Invalid email address"),
+  password: z.string()
+    .min(8, "Password must be at least 8 characters long")
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"),
 
   // Fields only for sign-up
-  firstName: type === 'sign-in' ? z.string().optional() : z.string().min(3),
-  lastName: type === 'sign-in' ? z.string().optional() : z.string().min(3),
-  address1: type === 'sign-in' ? z.string().optional() : z.string().max(50),
-  city: type === 'sign-in' ? z.string().optional() : z.string().max(50),
-  state: type === 'sign-in' ? z.string().optional() : z.string().min(2).max(2),
-  postalCode: type === 'sign-in' ? z.string().optional() : z.string().min(3).max(6),
-  dateOfBirth: type === 'sign-in' ? z.string().optional() : z.string().min(3),
-  ssn: type === 'sign-in' ? z.string().optional() : z.string().min(3),
-  confirmpassword: type === 'sign-in' ? z.string().optional() : z.string().min(8),
+  firstName: type === 'sign-in' ? z.string().optional() : z.string().min(1, "First name is required").max(50, "First name must be 50 characters or less"),
+  lastName: type === 'sign-in' ? z.string().optional() : z.string().min(1, "Last name is required").max(50, "Last name must be 50 characters or less"),
+  address1: type === 'sign-in' ? z.string().optional() : z.string().min(1, "Address is required").max(50, "Address must be 50 characters or less"),
+  city: type === 'sign-in' ? z.string().optional() : z.string().min(1, "City is required").max(50, "City must be 50 characters or less"),
+  state: type === 'sign-in' ? z.string().optional() : z.string().length(2, "State must be a 2-letter abbreviation"),
+  postalCode: type === 'sign-in' ? z.string().optional() : z.string().regex(/^\d{5}(-\d{4})?$/, "Invalid postal code format"),
+  dateOfBirth: type === 'sign-in' ? z.string().optional() : z.string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date of birth must be in YYYY-MM-DD format")
+    .refine((dob) => {
+      const date = new Date(dob);
+      const today = new Date();
+      const age = today.getFullYear() - date.getFullYear();
+      return age >= 18;
+    }, "You must be at least 18 years old"),
+  ssn: type === 'sign-in' ? z.string().optional() : z.string().regex(/^\d{3}-\d{2}-\d{4}$/, "Invalid SSN format (XXX-XX-XXXX)"),
+  confirmpassword: type === 'sign-in' ? z.string().optional() : z.string().min(8, "Confirm password must be at least 8 characters long"),
 }).refine((data) => {
   if (type === 'sign-up') {
     return data.password === data.confirmpassword;
@@ -219,71 +229,3 @@ export const authFormSchema = (type: string) => z.object({
   message: "Passwords do not match",
   path: ["confirmpassword"],
 });
-
-//To Do: Implement validation to AuthForm
-export const authFormValidationRules = {
-  firstName: {
-    required: true,
-    minLength: 2,
-    maxLength: 50,
-    pattern: /^[a-zA-Z\s]+$/,
-    message: 'First name must be at least 2 characters long and only contain letters and spaces',
-  },
-  lastName: {
-    required: true,
-    minLength: 2,
-    maxLength: 50,
-    pattern: /^[a-zA-Z\s]+$/,
-    message: 'Last name must be at least 2 characters long and only contain letters and spaces',
-  },
-  address1: {
-    required: true,
-    minLength: 5,
-    maxLength: 100,
-    pattern: /^[a-zA-Z0-9\s,.-]+$/,
-    message: 'Address must be at least 5 characters long and only contain letters, numbers, and special characters',
-  },
-  city: {
-    required: true,
-    minLength: 2,
-    maxLength: 50,
-    pattern: /^[a-zA-Z\s]+$/,
-    message: 'City must be at least 2 characters long and only contain letters and spaces',
-  },
-  state: {
-    required: true,
-    minLength: 2,
-    maxLength: 2,
-    pattern: /^[a-zA-Z]+$/,
-    message: 'State must be exactly 2 characters long and only contain letters',
-  },
-  postalCode: {
-    required: true,
-    minLength: 5,
-    maxLength: 10,
-    pattern: /^[0-9]+$/,
-    message: 'Postal code must be at least 5 characters long and only contain numbers',
-  },
-  dateOfBirth: {
-    required: true,
-    pattern: /^\d{1,2}\/\d{1,2}\/\d{4}$/,
-    message: 'Date of birth must be in the format MM/DD/YYYY',
-  },
-  ssn: {
-    required: true,
-    pattern: /^\d{3}-\d{2}-\d{4}$/,
-    message: 'SSN must be in the format XXX-XX-XXXX',
-  },
-  email: {
-    required: false,
-    pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-    message: 'Email must be in a valid format',
-  },
-  password: {
-    required: true,
-    minLength: 8,
-    maxLength: 128,
-    pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-    message: 'Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character',
-  },
-};
