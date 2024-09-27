@@ -196,7 +196,11 @@ export const getTransactionStatus = (date: Date) => {
 };
 
 export const authFormSchema = (type: string) => z.object({
-  // sign up
+  // Fields for both sign-in and sign-up
+  email: z.string().email(),
+  password: z.string().min(8),
+
+  // Fields only for sign-up
   firstName: type === 'sign-in' ? z.string().optional() : z.string().min(3),
   lastName: type === 'sign-in' ? z.string().optional() : z.string().min(3),
   address1: type === 'sign-in' ? z.string().optional() : z.string().max(50),
@@ -206,10 +210,15 @@ export const authFormSchema = (type: string) => z.object({
   dateOfBirth: type === 'sign-in' ? z.string().optional() : z.string().min(3),
   ssn: type === 'sign-in' ? z.string().optional() : z.string().min(3),
   confirmpassword: type === 'sign-in' ? z.string().optional() : z.string().min(8),
-  // both
-  email: z.string().email(),
-  password: z.string().min(8),
-})
+}).refine((data) => {
+  if (type === 'sign-up') {
+    return data.password === data.confirmpassword;
+  }
+  return true;
+}, {
+  message: "Passwords do not match",
+  path: ["confirmpassword"],
+});
 
 //To Do: Implement validation to AuthForm
 export const authFormValidationRules = {

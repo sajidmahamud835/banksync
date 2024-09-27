@@ -95,22 +95,28 @@ const AuthForm = ({ type }: { type: string }) => {
 
   const formSchema = authFormSchema(type);
 
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
-      password: ''
+      password: '',
+      confirmpassword: '',
+      firstName: '',
+      lastName: '',
+      address1: '',
+      city: '',
+      state: '',
+      postalCode: '',
+      dateOfBirth: '',
+      ssn: '',
     },
   })
-
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true);
 
     try {
-      // Sign up with Appwrite & create plaid token
-      if (type === 'sign-up' && data.password === data.confirmpassword) {
+      if (type === 'sign-up') {
         const userData = {
           firstName: data.firstName!,
           lastName: data.lastName!,
@@ -125,12 +131,7 @@ const AuthForm = ({ type }: { type: string }) => {
         }
 
         const newUser = await signUp(userData);
-
         setUser(newUser);
-      } else {
-
-        //To-Do: Update password error properly.
-        setErrorMsg("Passwords do not match. Please confirm your password.")
       }
 
       if (type === 'sign-in') {
