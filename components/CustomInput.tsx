@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select"
+
 const formSchema = authFormSchema('sign-up')
 
 interface CustomInput {
@@ -34,9 +35,12 @@ const CustomInput = ({ control, name, label, placeholder, options }: CustomInput
           <div className="flex w-full flex-col">
             <FormControl>
               {options ? (
-                <Select>
+                <Select
+                  value={field.value}
+                  onValueChange={field.onChange}
+                >
                   <SelectTrigger>
-                    <SelectValue placeholder={placeholder} />
+                    <SelectValue placeholder={placeholder || "Select an option"} />
                   </SelectTrigger>
                   <SelectContent>
                     {options.map((option) => (
@@ -51,7 +55,7 @@ const CustomInput = ({ control, name, label, placeholder, options }: CustomInput
                   placeholder={placeholder}
                   className="input-class"
                   id={field.name}
-                  type={name === 'password' ? 'password' : name === 'dateOfBirth' ? 'date' : 'text'}
+                  type={name === 'password' ? 'password' : name === 'confirmpassword' ? 'password' : name === 'dateOfBirth' ? 'date' : 'text'}
                   {...field}
                 />
               )}

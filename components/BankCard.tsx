@@ -26,7 +26,7 @@ const BankCard = ({ account, userName, showBalance = true }: CreditCardProps) =>
                 {userName}
               </h1>
               <h2 className="text-12 font-semibold text-white">
-              ●● / ●●
+                ●● / ●●
               </h2>
             </div>
             <p className="text-14 font-semibold tracking-[1.1px] text-white">
@@ -36,13 +36,13 @@ const BankCard = ({ account, userName, showBalance = true }: CreditCardProps) =>
         </div>
 
         <div className="bank-card_icon">
-          <Image 
+          <Image
             src="/icons/Paypass.svg"
             width={20}
             height={24}
             alt="pay"
           />
-          <Image 
+          <Image
             src="/icons/mastercard.svg"
             width={45}
             height={32}
@@ -51,7 +51,7 @@ const BankCard = ({ account, userName, showBalance = true }: CreditCardProps) =>
           />
         </div>
 
-        <Image 
+        <Image
           src="/icons/lines.png"
           width={316}
           height={190}
@@ -60,7 +60,7 @@ const BankCard = ({ account, userName, showBalance = true }: CreditCardProps) =>
         />
       </Link>
 
-      {showBalance && <Copy title={account?.sharaebleId} />}
+      {showBalance && <Copy title={account?.shareableId} />}
     </div>
   )
 }
