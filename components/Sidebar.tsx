@@ -7,14 +7,20 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Footer from './Footer'
 import PlaidLink from './PlaidLink'
+import { motion } from 'framer-motion'
 
 const Sidebar = ({ user }: SiderbarProps) => {
   const pathname = usePathname();
 
   return (
-    <section className="sidebar">
+    <motion.section
+      className="sidebar"
+      initial={{ x: -300 }}
+      animate={{ x: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <nav className="flex flex-col gap-4">
-        <Link href="/" className="mb-12 cursor-pointer flex items-center gap-2">
+        <Link href="/" className="mb-12 cursor-pointer flex items-center gap-2 transition-transform hover:scale-105">
           <Image
             src="/icons/logo.svg"
             width={34}
@@ -30,19 +36,29 @@ const Sidebar = ({ user }: SiderbarProps) => {
 
           return (
             <Link href={item.route} key={item.label}
-              className={cn('sidebar-link', { 'bg-bank-gradient': isActive })}
+              className={cn(
+                'sidebar-link group transition-all duration-300 ease-in-out',
+                { 'bg-bank-gradient': isActive }
+              )}
             >
-              <div className="relative size-6">
+              <div className="relative size-6 transition-transform group-hover:scale-110">
                 <Image
                   src={item.imgURL}
                   alt={item.label}
                   fill
                   className={cn({
-                    'brightness-[3] invert-0': isActive
+                    'brightness-[3] invert-0': isActive,
+                    'group-hover:brightness-[2] group-hover:invert-[0.2]': !isActive
                   })}
                 />
               </div>
-              <p className={cn("sidebar-label", { "!text-white": isActive })}>
+              <p className={cn(
+                "sidebar-label transition-colors",
+                {
+                  "!text-white": isActive,
+                  "group-hover:text-gray-700": !isActive
+                }
+              )}>
                 {item.label}
               </p>
             </Link>
@@ -53,7 +69,7 @@ const Sidebar = ({ user }: SiderbarProps) => {
       </nav>
 
       <Footer user={user} />
-    </section>
+    </motion.section>
   )
 }
 
