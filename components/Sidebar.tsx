@@ -65,7 +65,9 @@ const Sidebar = ({ user }: SiderbarProps) => {
           )
         })}
 
-        <PlaidLink user={user} />
+        <div className="transition-all duration-300 ease-in-out hover:scale-105">
+          <PlaidLink user={user} className="w-full group" />
+        </div>
       </nav>
 
       <Footer user={user} />
