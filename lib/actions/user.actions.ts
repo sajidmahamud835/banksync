@@ -317,3 +317,35 @@ export const getBankByAccountId = async ({ accountId }: getBankByAccountIdProps)
     console.error("Error in getBankByAccountId:", error);
   }
 }
+
+// Add these new functions to the existing file
+
+export const createWeb3Account = async ({ userId, address }: { userId: string; address: string }) => {
+  try {
+    const web3Account = await database.createDocument(
+      process.env.APPWRITE_DATABASE_ID!,
+      process.env.APPWRITE_WEB3_ACCOUNT_COLLECTION_ID!,
+      ID.unique(),
+      {
+        userId,
+        address,
+      }
+    );
+    return parseStringify(web3Account);
+  } catch (error) {
+    console.error("An error occurred while creating Web3 account:", error);
+  }
+};
+
+export const getWeb3AccountsByUserId = async ({ userId }: { userId: string }) => {
+  try {
+    const web3Accounts = await database.listDocuments(
+      process.env.APPWRITE_DATABASE_ID!,
+      process.env.APPWRITE_WEB3_ACCOUNT_COLLECTION_ID!,
+      [Query.equal("userId", userId)]
+    );
+    return parseStringify(web3Accounts.documents);
+  } catch (error) {
+    console.error("An error occurred while getting Web3 accounts:", error);
+  }
+};

@@ -67,7 +67,7 @@ declare type Transaction = {
   id: string;
   $id: string;
   name: string;
-  paymentChannel: string;
+  paymentChannel: string | "web3";
   type: string;
   accountId: string;
   amount: number;
@@ -327,4 +327,16 @@ declare interface getBankProps {
 
 declare interface getBankByAccountIdProps {
   accountId: string;
+}
+
+// Add these new types
+
+declare type Web3Account = {
+  $id: string;
+  userId: string;
+  address: string;
+};
+
+declare interface Web3TransactionProps {
+  address: string;
 }
