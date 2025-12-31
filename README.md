@@ -1,71 +1,138 @@
-# BankSync
+<div align="center">
 
-BankSync is a financial technology application that allows users to link their bank accounts, view transactions, and manage their finances. It leverages Plaid for bank data synchronization and Appwrite for backend services.
+# 🏦 BankSync — Next-Gen Financial Management Platform
 
-## Tech Stack
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Plaid](https://img.shields.io/badge/Integrated_with-Plaid-black?style=for-the-badge&logo=plaid)](https://plaid.com/)
+[![Appwrite](https://img.shields.io/badge/Backend-Appwrite-f02e65?style=for-the-badge&logo=appwrite)](https://appwrite.io/)
 
-*   **Frontend/Backend Framework:** Next.js (Node.js)
-*   **Language:** TypeScript
-*   **Styling:** Tailwind CSS
-*   **Database & Auth:** Appwrite
-*   **Bank Integration:** Plaid API
-*   **Payments:** Dwolla API
+**A comprehensive financial technology application facilitating secure banking integration, real-time transaction monitoring, and streamlined fund transfers.**
 
-## Security & Secrets
+*🔒 Secure • ⚡ Fast • 📱 Modern*
 
-**WARNING:** Never commit your `.env` file to version control. This application handles sensitive financial data.
+[Report Bug](https://github.com/sajidmahamud835/banksync/issues) · [Request Feature](https://github.com/sajidmahamud835/banksync/issues)
 
-The application uses the following environment variables:
+</div>
 
-*   **Appwrite:** Endpoint, Project ID, Database ID, Collection IDs, API Key.
-*   **Plaid:** Client ID, Secret, Environment (sandbox/production).
-*   **Dwolla:** Key, Secret, Base URL, Environment.
-*   **Sentry:** DSN, Auth Token (for monitoring).
+---
 
-## Setup Instructions
+## 🔬 About The Project
 
-1.  **Clone the repository.**
-2.  **Install dependencies:**
+**BankSync** addresses the growing fragmentation in personal finance management. As users increasingly hold assets across multiple institutions and digital wallets, the need for a unified, secure aggregator becomes critical.
+
+This project implements a **Secure Financial Data Aggregation Protocol**, leveraging the Plaid API to securely bridge the gap between traditional banking infrastructure and modern web interfaces. It focuses on the technical challenges of handling sensitive financial data, enforcing strict security standards (SOC2 compliance via Plaid), and providing a seamless user experience for fund management.
+
+### 🎯 Key Implementations
+1.  **Secure Data Linkage**: Utilization of ephemeral link tokens to establish secure, persistent connections with financial institutions without storing sensitive banking credentials.
+2.  **Real-Time Synchronization**: Event-driven architecture to listen for transaction webhooks and update local states immediately.
+3.  **Regulatory Compliance**: Integration with Dwolla for ACH transfers, adhering to KYC (Know Your Customer) and AML (Anti-Money Laundering) regulations.
+
+---
+
+## ⚙️ Technical Architecture
+
+The application is built on a robust customized stack designed for security and scalability:
+
+-   **Frontend**: Next.js App Router with Server Actions for direct backend communication without exposing API routes.
+-   **Backend Services**: Appwrite (BaaS) for database, authentication management, and file storage.
+-   **Financial Infrastructure**:
+    -   **Plaid**: Transaction data and account verification.
+    -   **Dwolla**: Payment processing network (ACH).
+-   **Security**: Sentry for real-time error tracking and performance monitoring.
+
+---
+
+## ✨ Features
+
+### 🟢 Implemented Capabilities
+
+| Component | Feature Description |
+|-----------|---------------------|
+| **Multi-Bank Linking** | Connect multiple bank accounts simultaneously via Plaid Link |
+| **Transaction Feed** | Unified view of transactions across all connected accounts |
+| **Fund Transfer** | Initiate ACH transfers between verified accounts (Dwolla) |
+| **Authentication** | Secure email/password login with session management via Appwrite |
+| **Responsive UI** | Mobile-first dashboard built with Tailwind CSS |
+
+### 🗓️ Research & Development Plan (Todo)
+
+- [ ] **Spending Analytics**: Implement clustering algorithms to categorize transactions automatically (e.g., "Dining", "Utilities").
+- [ ] **Budget Forecasting**: Use time-series analysis (ARIMA or LSTM) to predict future spending based on historical data.
+- [ ] **Web3 Integration**: [Experimental] Add support for viewing ETH/SOL wallet balances alongside fiat accounts.
+- [ ] **Multi-Factor Authentication (MFA)**: Strengthen security with TOTP or SMS verification.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+-   **Node.js**: v18.0 or higher
+-   **Appwrite**: A running instance or Cloud account
+-   **Plaid & Dwolla Accounts**: Sandbox keys for development
+
+### Installation
+
+1.  **Clone the Repository**
+    ```bash
+    git clone https://github.com/sajidmahamud835/banksync.git
+    cd banksync
+    ```
+
+2.  **Install Dependencies**
     ```bash
     npm install
     ```
-3.  **Environment Setup:**
-    *   Copy `.env.example` to `.env`.
-    *   Fill in the required values.
-    *   For **Plaid**, get your keys from the Plaid Dashboard.
-    *   For **Appwrite**, set up a project and update the IDs. You can use the provided `setupAttributes.ts` script to initialize collections (ensure you have the Appwrite CLI or credentials set up).
-4.  **Run the application:**
+
+3.  **Environment Configuration**
+    Copy `.env.example` to `.env` and populate secrets:
+    ```bash
+    cp .env.example .env
+    ```
+    *Required keys: Plaid Client/Secret, Appwrite Endpoint/Project, Dwolla Key/Secret.*
+
+4.  **Database Initialization**
+    Run the setup script to create necessary Appwrite collections:
+    ```bash
+    npx ts-node scripts/setupAttributes.ts
+    ```
+
+5.  **Run Development Server**
     ```bash
     npm run dev
     ```
 
-## Mock Mode
+### 🛠️ Mock Mode (For Testing)
 
-For development and testing without real banking credentials, you can run the application in **Mock Mode**. This bypasses the actual Plaid API calls and returns dummy data.
-
-To enable Mock Mode, set the `MOCK_MODE` environment variable to `true`.
-
+To bypass external APIs during UI development:
 ```bash
 MOCK_MODE=true npm run dev
 ```
+*This simulates API responses for Account Linking and Transactions.*
 
-In Mock Mode:
-*   Link Token creation returns a mock token.
-*   Public Token exchange returns a mock access token.
-*   Account fetching returns a dummy "Mock Checking" account.
-*   Transaction syncing returns dummy transactions.
+---
 
-This allows you to test the UI flows and application logic without connecting to a real bank.
+## 🤝 Related Projects
 
-## Project Structure
+Explore other components of the research portfolio:
 
-*   `app/`: Next.js App Router pages and layouts.
-*   `components/`: Reusable UI components.
-*   `lib/`: Utility functions, Appwrite client, Plaid client, and Server Actions.
-    *   `lib/actions/`: Server Actions for User, Bank, and Transaction logic.
-*   `public/`: Static assets.
-*   `types/`: TypeScript type definitions.
+1.  **[EasyCom](../easycom)** - A commercial e-commerce platform demonstrating high-scale user management.
+2.  **[InspectHealth](../inspecthealth)** - Secure data handling in the healthcare domain, sharing compliance patterns with FinTech.
+3.  **[MarketSync-EA](../MarketSync-EA)** - Algorithmic trading system; potential future integration for automated investing from BankSync.
 
-## License
+---
 
-MIT
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+<div align="center">
+
+**[Sajid Mahamud](https://github.com/sajidmahamud835)**
+
+*Researcher • Developer • FinTech Enthusiast*
+
+</div>
