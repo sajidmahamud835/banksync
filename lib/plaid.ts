@@ -1,4 +1,5 @@
 import { Configuration, PlaidApi, PlaidEnvironments } from 'plaid';
+import { PlaidMockApi } from './plaid-mock';
 
 const configuration = new Configuration({
   basePath: PlaidEnvironments.sandbox,
@@ -10,4 +11,6 @@ const configuration = new Configuration({
   }
 })
 
-export const plaidClient = new PlaidApi(configuration);
+export const plaidClient = process.env.MOCK_MODE === 'true'
+  ? new PlaidMockApi(configuration) as unknown as PlaidApi
+  : new PlaidApi(configuration);

@@ -143,7 +143,7 @@ const AuthForm = ({ type }: { type: string }) => {
         if (response) router.push('/')
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       setErrorMsg('Something went wrong, please try again');
     } finally {
       setIsLoading(false);

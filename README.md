@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# BankSync
 
-## Getting Started
+BankSync is a financial technology application that allows users to link their bank accounts, view transactions, and manage their finances. It leverages Plaid for bank data synchronization and Appwrite for backend services.
 
-First, run the development server:
+## Tech Stack
+
+*   **Frontend/Backend Framework:** Next.js (Node.js)
+*   **Language:** TypeScript
+*   **Styling:** Tailwind CSS
+*   **Database & Auth:** Appwrite
+*   **Bank Integration:** Plaid API
+*   **Payments:** Dwolla API
+
+## Security & Secrets
+
+**WARNING:** Never commit your `.env` file to version control. This application handles sensitive financial data.
+
+The application uses the following environment variables:
+
+*   **Appwrite:** Endpoint, Project ID, Database ID, Collection IDs, API Key.
+*   **Plaid:** Client ID, Secret, Environment (sandbox/production).
+*   **Dwolla:** Key, Secret, Base URL, Environment.
+*   **Sentry:** DSN, Auth Token (for monitoring).
+
+## Setup Instructions
+
+1.  **Clone the repository.**
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+3.  **Environment Setup:**
+    *   Copy `.env.example` to `.env`.
+    *   Fill in the required values.
+    *   For **Plaid**, get your keys from the Plaid Dashboard.
+    *   For **Appwrite**, set up a project and update the IDs. You can use the provided `setupAttributes.ts` script to initialize collections (ensure you have the Appwrite CLI or credentials set up).
+4.  **Run the application:**
+    ```bash
+    npm run dev
+    ```
+
+## Mock Mode
+
+For development and testing without real banking credentials, you can run the application in **Mock Mode**. This bypasses the actual Plaid API calls and returns dummy data.
+
+To enable Mock Mode, set the `MOCK_MODE` environment variable to `true`.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+MOCK_MODE=true npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+In Mock Mode:
+*   Link Token creation returns a mock token.
+*   Public Token exchange returns a mock access token.
+*   Account fetching returns a dummy "Mock Checking" account.
+*   Transaction syncing returns dummy transactions.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This allows you to test the UI flows and application logic without connecting to a real bank.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Project Structure
 
-## Learn More
+*   `app/`: Next.js App Router pages and layouts.
+*   `components/`: Reusable UI components.
+*   `lib/`: Utility functions, Appwrite client, Plaid client, and Server Actions.
+    *   `lib/actions/`: Server Actions for User, Bank, and Transaction logic.
+*   `public/`: Static assets.
+*   `types/`: TypeScript type definitions.
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+MIT
