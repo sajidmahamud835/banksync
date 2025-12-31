@@ -117,9 +117,9 @@ MOCK_MODE=true npm run dev
 
 Explore other components of the research portfolio:
 
-1.  **[EasyCom](../easycom)** - A commercial e-commerce platform demonstrating high-scale user management.
-2.  **[InspectHealth](../inspecthealth)** - Secure data handling in the healthcare domain, sharing compliance patterns with FinTech.
-3.  **[MarketSync-EA](../MarketSync-EA)** - Algorithmic trading system; potential future integration for automated investing from BankSync.
+1.  **[EasyCom](https://github.com/sajidmahamud835/easycom)** - A commercial e-commerce platform demonstrating high-scale user management.
+2.  **[InspectHealth](https://github.com/sajidmahamud835/inspecthealth)** - Secure data handling in the healthcare domain, sharing compliance patterns with FinTech.
+3.  **[MarketSync-EA](https://github.com/sajidmahamud835/MarketSync-EA)** - Algorithmic trading system; potential future integration for automated investing from BankSync.
 
 ---
 
